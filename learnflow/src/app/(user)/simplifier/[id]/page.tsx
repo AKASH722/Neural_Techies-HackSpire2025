@@ -12,6 +12,7 @@ import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createClient } from "@/utils/supabase/server";
+import ReactMarkdown from "react-markdown";
 
 // Helper function to extract YouTube video ID
 function extractYouTubeVideoId(url: string): string | null {
@@ -55,11 +56,11 @@ export default async function SummaryPage({
 
   return (
     <main className="container mx-auto py-10">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-5xl">
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold">{summary.title}</h1>
-            <Badge variant="outline">
+            <Badge variant="outline" className="px-3 py-1 text-sm">
               {typeLabels[summary.type as "text" | "youtube" | "document"]}
             </Badge>
           </div>
@@ -100,33 +101,29 @@ export default async function SummaryPage({
         )}
 
         {/* Summary Card with Tabs for Text Input */}
-        <Card className="mb-8">
+        <Card className="mb-8 shadow-md">
           {summary.type === "text" ? (
             <Tabs defaultValue="summary">
-              <CardHeader>
+              <CardHeader className="border-b">
                 <div className="flex items-center justify-between">
-                  <CardTitle>Content</CardTitle>
-                  <TabsList>
-                    <TabsTrigger value="summary">Summary</TabsTrigger>
+                  <CardTitle className="text-xl">Content</CardTitle>
+                  <TabsList className="grid w-64 grid-cols-2">
+                    <TabsTrigger value="summary">Explanation</TabsTrigger>
                     <TabsTrigger value="original">Original Text</TabsTrigger>
                   </TabsList>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
                 <TabsContent value="summary" className="mt-0">
-                  <div className="prose max-w-none">
-                    {summary.summary.split("\n").map((paragraph, idx) => (
-                      <p key={idx}>{paragraph}</p>
-                    ))}
+                  <div className="prose max-h-[calc(100dvh-26rem)] max-w-full overflow-y-auto rounded border p-6 md:max-h-[calc(100dvh-20rem)]">
+                    <ReactMarkdown>{summary.summary}</ReactMarkdown>
                   </div>
                 </TabsContent>
                 <TabsContent value="original" className="mt-0">
-                  <div className="prose max-h-96 max-w-none overflow-y-auto rounded border p-4">
+                  <div className="prose max-h-[calc(100dvh-26rem)] max-w-full overflow-y-auto rounded border p-6 md:max-h-[calc(100dvh-20rem)]">
                     {/* Assuming original text is stored in summary.originalText */}
                     {summary.original_text ? (
-                      summary.original_text
-                        .split("\n")
-                        .map((paragraph, idx) => <p key={idx}>{paragraph}</p>)
+                      <ReactMarkdown>{summary.original_text}</ReactMarkdown>
                     ) : (
                       <p className="italic text-gray-500">
                         Original text not available
@@ -138,25 +135,25 @@ export default async function SummaryPage({
             </Tabs>
           ) : (
             <>
-              <CardHeader>
-                <CardTitle>Simplified Summary</CardTitle>
+              <CardHeader className="border-b">
+                <CardTitle className="text-xl">
+                  Simplified Explanation
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="prose max-w-none">
-                  {summary.summary.split("\n").map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))}
+              <CardContent className="p-6">
+                <div className="prose max-h-[calc(100dvh-26rem)] max-w-full overflow-y-auto rounded border p-6 md:max-h-[calc(100dvh-20rem)]">
+                  <ReactMarkdown>{summary.summary}</ReactMarkdown>
                 </div>
               </CardContent>
             </>
           )}
-          <CardFooter>
+          <CardFooter className="border-t p-6">
             <div className="flex w-full items-center justify-between">
               <div className="text-sm text-gray-500">
                 {summary.source_info && <p>Source: {summary.source_info}</p>}
               </div>
               <Link href={`/simplifier/${summary.id}/quiz`}>
-                <Button>
+                <Button className="px-6 py-2">
                   Test Your Knowledge
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

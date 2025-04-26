@@ -136,7 +136,7 @@ export default function Navigation({
       {/* Main content */}
       <div className="flex flex-1 flex-col md:ml-60">
         {/* Mobile Navbar - sticky */}
-        <div className="bg-sidebar border-sidebar-border fixed left-0 right-0 top-0 z-50 flex h-14 items-center justify-between border-b px-4 shadow-sm md:hidden">
+        <div className="border-sidebar-border fixed left-0 right-0 top-0 z-50 flex h-14 items-center justify-between border-b bg-background px-4 shadow-sm md:hidden">
           <div className="flex items-center font-sans">
             <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
               LF
@@ -153,17 +153,17 @@ export default function Navigation({
         </div>
 
         {/* Breadcrumb - sticky */}
-        <div className="sticky top-[4.25rem] z-40 h-14 items-center px-3 md:top-0 md:bg-background md:p-4 md:shadow-sm">
+        <div className="sticky top-[3.5rem] z-40 h-14 items-center bg-background p-3 md:top-0 md:bg-background md:p-4 md:shadow-sm">
           <Breadcrumb />
         </div>
 
         {/* Main Content */}
-        <main className="mt-8 flex-1 overflow-y-auto overflow-x-hidden p-4 md:mt-0 md:p-6">
+        <main className="my-10 flex-1 overflow-y-auto overflow-x-hidden p-4 md:mt-0 md:p-6">
           {children}
         </main>
 
         {/* Bottom Mobile Nav - sticky */}
-        <div className="bg-sidebar border-sidebar-border fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t shadow-lg md:hidden">
+        <div className="border-sidebar-border fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t bg-background shadow-lg md:hidden">
           {menuItems.map((item) => (
             <Button
               key={item.id}

@@ -1,12 +1,54 @@
 "use client";
 
-import React from "react";
+import React, { Fragment } from "react";
 import { usePathname } from "next/navigation";
 import Logout from "@/section/auth/logout";
-import { BookOpen, FileText, LayoutDashboard, Route } from "lucide-react";
+import {
+  BookOpen,
+  FileText,
+  LayoutDashboard,
+  Route,
+  ChevronRight,
+  Home,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+
+function Breadcrumb() {
+  const pathname = usePathname();
+  const segments = pathname.split("/").filter(Boolean);
+
+  return (
+    <nav className="mb-4 flex items-center gap-2 text-sm">
+      {segments[0] !== "dashboard" && (
+        <Link href="/dashboard">
+          <Home className="size-5 text-muted-foreground" />
+        </Link>
+      )}
+      {segments.map((segment, index) => {
+        const route = segment.replace(/-/g, " ");
+        return (
+          <Fragment key={index}>
+            {segment !== "dashboard" && (
+              <ChevronRight className="size-5 text-muted-foreground" />
+            )}
+            <Link
+              href={`/${segments.slice(0, index + 1).join("/")}`}
+              className={`font-sans text-base font-bold ${
+                index === segments.length - 1
+                  ? "text-primary"
+                  : "text-muted-foreground"
+              } `}
+            >
+              {route.charAt(0).toUpperCase() + route.slice(1)}
+            </Link>
+          </Fragment>
+        );
+      })}
+    </nav>
+  );
+}
 
 export default function Navigation({
   children,
@@ -126,7 +168,10 @@ export default function Navigation({
       </div>
 
       {/* Main Content Container */}
-      <main className="mt-14 flex-1 p-4 md:ml-64 md:mt-0">{children}</main>
+      <main className="mt-14 flex-1 p-4 md:ml-64 md:mt-0">
+        <Breadcrumb />
+        {children}
+      </main>
     </div>
   );
 }

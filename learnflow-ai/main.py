@@ -1,6 +1,9 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from explanationGenerator import *
 import tempfile
+from typing import Dict, Any
+from adaptiveLearning import *
+
 
 app = FastAPI()
 
@@ -49,3 +52,32 @@ async def process_video(video_link: str = Form(...)):
         return {"error": "No meaningful content extracted."}
 
     return simplify_and_generate_quiz(extracted_text)
+
+# Create the POST API
+@app.post("/generate-roadmap", response_model=Dict[str, Any])
+async def create_roadmap(request: RoadmapRequest):
+    roadmap = await generate_roadmap(request)
+    return roadmap
+
+@app.post("/expand-roadmap")
+async def expand_roadmap_api(request: ExpandRequest):
+    result = await create_learning_path(
+        topic=request.topic,
+        subtopic=request.subtopic,
+        time=request.time,
+        learning_style=request.learning_style,
+        skill_level=request.skill_level
+    )
+    return result
+
+# @app.post("/expand_roadmap")
+# async def expand_given_roadmap(roadmap: Dict[str, Any]):
+#     topic = roadmap.get("Topic Name", "Unknown Topic")  # Default if missing
+#     expanded_roadmap = await expand_roadmap(roadmap, topic)
+#     return expanded_roadmap
+
+# @app.post("/generate_quiz")
+# async def api_generate_quiz(roadmap: Dict[str, Any]):
+#     topic = roadmap.get("Topic Name", "Unknown Topic")
+#     expanded_with_quizzes = await generate_quizzes(roadmap, topic)
+#     return expanded_with_quizzes

@@ -155,7 +155,7 @@ export default async function SummaryPage({
               <div className="text-sm text-gray-500">
                 {summary.source_info && <p>Source: {summary.source_info}</p>}
               </div>
-              <Link href={`/quiz/${summary.id}`}>
+              <Link href={`/simplifier/${summary.id}/quiz`}>
                 <Button>
                   Test Your Knowledge
                   <ArrowRight className="ml-2 h-4 w-4" />

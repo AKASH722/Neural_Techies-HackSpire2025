@@ -65,9 +65,8 @@ Your task:
     - Write a clear and meaningful question.
     - Provide exactly 4 options (A, B, C, D).
     - Specify the correct option.
-    - Write a **detailed explanation** (4-6 sentences) for:
+    - Write a **detailed explanation** (2-3 sentences) for:
         - Why the correct answer is right.
-        - Why each of the wrong answers is incorrect.
 
 Formatting rules:
 - Return the entire response as a **valid JSON object** in the following format:
@@ -85,12 +84,7 @@ Formatting rules:
             }},
             "correct_answer": "B",
             "explanation": {{
-                "correct": "Long explanation why Option B is correct.",
-                "wrong": {{
-                    "A": "Why Option A is wrong.",
-                    "C": "Why Option C is wrong.",
-                    "D": "Why Option D is wrong."
-                }}
+                "correct": "Long explanation why Option B is correct."
             }}
         }},
         ...

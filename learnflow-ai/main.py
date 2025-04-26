@@ -1,4 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
+
 from explanationGenerator import *
 import tempfile
 from typing import Dict, Any
@@ -6,6 +8,14 @@ from adaptiveLearning import *
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[os.environ.get('FRONTEND_URL')],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/process_text/")
 async def process_text(text: str = Form(...)):

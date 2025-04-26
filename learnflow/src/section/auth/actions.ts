@@ -6,7 +6,7 @@ import type { LoginSchema, SignupSchema } from "@/section/auth/schema";
 import { loginSchema, signupSchema } from "@/section/auth/schema";
 
 export const signInWithGoogle = async () => {
-  const supabase = await createClient();
+  const supabase = await createClient(false);
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -29,7 +29,7 @@ export const signInWithGoogle = async () => {
 
 export async function login(values: LoginSchema) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient(false);
 
     const parsed = loginSchema.safeParse(values);
 
@@ -59,7 +59,7 @@ export async function login(values: LoginSchema) {
 
 export async function signup(values: SignupSchema) {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient(false);
 
     const parsed = signupSchema.safeParse(values);
 
@@ -94,7 +94,7 @@ export async function signup(values: SignupSchema) {
 
 export async function logout() {
   try {
-    const supabase = await createClient();
+    const supabase = await createClient(false);
     const { error } = await supabase.auth.signOut();
     if (error) {
       return { error: "Something went wrong. Please try again later." };

@@ -1,5 +1,6 @@
 "use client";
 
+import { LogOut } from "lucide-react";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { logout } from "@/section/auth/actions";
@@ -20,6 +21,7 @@ export default function Logout(props: ButtonProps) {
       }}
     >
       Logout
+      <LogOut/>
     </Button>
   );
 }

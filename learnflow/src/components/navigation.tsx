@@ -20,7 +20,7 @@ function Breadcrumb() {
   const segments = pathname.split("/").filter(Boolean);
 
   return (
-    <nav className="mb-4 flex items-center gap-2 text-sm">
+    <nav className="flex items-center gap-2 text-sm">
       {segments[0] !== "dashboard" && (
         <Link href="/dashboard">
           <Home className="size-5 text-muted-foreground" />
@@ -39,7 +39,7 @@ function Breadcrumb() {
                 index === segments.length - 1
                   ? "text-primary"
                   : "text-muted-foreground"
-              } `}
+              }`}
             >
               {route.charAt(0).toUpperCase() + route.slice(1)}
             </Link>
@@ -86,8 +86,8 @@ export default function Navigation({
   ];
 
   return (
-    <div className="flex h-full flex-col">
-      {/* Desktop Sidebar */}
+    <div className="flex min-h-screen flex-col md:flex-row">
+      {/* Sidebar - sticky */}
       <aside className="md:border-sidebar-border md:bg-sidebar md:text-sidebar-foreground hidden md:fixed md:inset-y-0 md:flex md:w-60 md:flex-col md:border-r md:shadow-sm">
         <div className="border-sidebar-border flex h-16 items-center border-b px-4 font-sans">
           <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
@@ -96,15 +96,17 @@ export default function Navigation({
           <span className="ml-2 text-lg font-bold">LearnFlow</span>
         </div>
 
-        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-4">
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
           {menuItems.map((item) => (
             <Button
               key={item.id}
               variant={activeItem === item.id ? "secondary" : "ghost"}
-              className={`relative h-auto w-full justify-start px-4 py-3 ${activeItem === item.id ? "font-medium" : ""}`}
+              className={`relative h-auto w-full justify-start px-4 py-3 ${
+                activeItem === item.id ? "font-medium" : ""
+              }`}
               asChild
             >
-              <Link href={item.path} passHref>
+              <Link href={item.path}>
                 {activeItem === item.id && (
                   <span className="bg-sidebar-primary absolute bottom-0 left-0 top-0 w-1 rounded-r"></span>
                 )}
@@ -126,52 +128,58 @@ export default function Navigation({
         <div className="px-3 py-2">
           <Logout
             variant="ghost"
-            className={`relative h-auto w-full justify-start px-4 py-3`}
+            className="relative h-auto w-full justify-start px-4 py-3"
           />
         </div>
       </aside>
 
-      {/* Mobile/Tablet Top Navbar */}
-      <div className="bg-sidebar border-sidebar-border fixed left-0 right-0 top-0 z-50 flex h-14 items-center justify-between border-b px-4 shadow-sm md:hidden">
-        <div className="flex items-center font-sans">
-          <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
-            LF
+      {/* Main content */}
+      <div className="flex flex-1 flex-col md:ml-60">
+        {/* Mobile Navbar - sticky */}
+        <div className="bg-sidebar border-sidebar-border fixed left-0 right-0 top-0 z-50 flex h-14 items-center justify-between border-b px-4 shadow-sm md:hidden">
+          <div className="flex items-center font-sans">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-primary font-bold text-primary-foreground">
+              LF
+            </div>
+            <span className="ml-2 text-lg font-bold">LearnFlow</span>
           </div>
-          <span className="ml-2 text-lg font-bold">LearnFlow</span>
+          <div>
+            <Logout
+              variant="ghost"
+              size="icon"
+              className="gap-3 rounded-full"
+            />
+          </div>
         </div>
 
-        <div>
-          <Logout variant="ghost" size="icon" className="gap-3 rounded-full" />
+        {/* Breadcrumb - sticky */}
+        <div className="sticky top-[4.25rem] z-40 h-14 items-center px-3 md:top-0 md:bg-background md:p-4 md:shadow-sm">
+          <Breadcrumb />
         </div>
-      </div>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="bg-sidebar border-sidebar-border fixed bottom-0 left-0 right-0 z-50 border-t shadow-lg md:hidden">
-        <nav className="flex items-center justify-around gap-3">
+        {/* Main Content */}
+        <main className="mt-8 flex-1 overflow-y-auto overflow-x-hidden p-4 md:mt-0 md:p-6">
+          {children}
+        </main>
+
+        {/* Bottom Mobile Nav - sticky */}
+        <div className="bg-sidebar border-sidebar-border fixed bottom-0 left-0 right-0 z-50 flex justify-around border-t shadow-lg md:hidden">
           {menuItems.map((item) => (
             <Button
               key={item.id}
               variant="secondary"
-              className={`m-4 flex aspect-square flex-1 flex-col items-center justify-center rounded-full ${
+              className={`m-2 flex aspect-square flex-1 flex-col items-center justify-center rounded-full ${
                 activeItem !== item.id
                   ? "bg-sidebar-accent/30 text-sidebar-primary"
                   : "hover:bg-sidebar-accent/20 hover:text-sidebar-primary"
               }`}
               asChild
             >
-              <Link href={item.path} passHref>
-                {item.icon}
-              </Link>
+              <Link href={item.path}>{item.icon}</Link>
             </Button>
           ))}
-        </nav>
+        </div>
       </div>
-
-      {/* Main Content Container */}
-      <main className="mt-14 flex-1 p-4 md:ml-64 md:mt-0">
-        <Breadcrumb />
-        {children}
-      </main>
     </div>
   );
 }

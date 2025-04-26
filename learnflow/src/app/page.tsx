@@ -1,4 +1,4 @@
-import LandingPage from "@/section/landing-page/landing-page";
+import LandingPage from "@/section/landing-page/view/landing-page";
 
 export default function Page() {
   return <LandingPage />;

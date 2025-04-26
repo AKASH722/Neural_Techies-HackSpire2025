@@ -1,7 +1,13 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
+  const PUBLIC_ROUTES = ["/"];
+
+  if (PUBLIC_ROUTES.includes(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   return await updateSession(request);
 }
 

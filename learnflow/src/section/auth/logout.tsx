@@ -20,8 +20,8 @@ export default function Logout(props: ButtonProps) {
         }
       }}
     >
-      Logout
-      <LogOut/>
+      <LogOut />
+      <span className="ml-2 hidden md:inline">Logout</span>
     </Button>
   );
 }

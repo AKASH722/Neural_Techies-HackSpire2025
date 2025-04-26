@@ -1,5 +1,3 @@
-import Logout from "@/section/auth/logout";
-
 export default function Home() {
-  return <Logout />;
+  return <h1>Landing Page</h1>;
 }

@@ -41,7 +41,7 @@ export default function SignupForm() {
         toast.error(response.error);
       } else {
         toast.success(response.message);
-        router.push("/");
+        router.push("/dashboard");
       }
     });
   }

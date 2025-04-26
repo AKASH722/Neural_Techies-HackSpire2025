@@ -34,6 +34,163 @@ export type Database = {
   };
   public: {
     Tables: {
+      questions: {
+        Row: {
+          correct_answer: string;
+          correct_explanation: string | null;
+          created_at: string | null;
+          option_a: string;
+          option_b: string;
+          option_c: string;
+          option_d: string;
+          position: number;
+          question_id: number;
+          question_text: string;
+          quiz_id: number | null;
+          wrong_explanation_a: string | null;
+          wrong_explanation_b: string | null;
+          wrong_explanation_c: string | null;
+          wrong_explanation_d: string | null;
+        };
+        Insert: {
+          correct_answer: string;
+          correct_explanation?: string | null;
+          created_at?: string | null;
+          option_a: string;
+          option_b: string;
+          option_c: string;
+          option_d: string;
+          position: number;
+          question_id?: number;
+          question_text: string;
+          quiz_id?: number | null;
+          wrong_explanation_a?: string | null;
+          wrong_explanation_b?: string | null;
+          wrong_explanation_c?: string | null;
+          wrong_explanation_d?: string | null;
+        };
+        Update: {
+          correct_answer?: string;
+          correct_explanation?: string | null;
+          created_at?: string | null;
+          option_a?: string;
+          option_b?: string;
+          option_c?: string;
+          option_d?: string;
+          position?: number;
+          question_id?: number;
+          question_text?: string;
+          quiz_id?: number | null;
+          wrong_explanation_a?: string | null;
+          wrong_explanation_b?: string | null;
+          wrong_explanation_c?: string | null;
+          wrong_explanation_d?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "questions_quiz_id_fkey";
+            columns: ["quiz_id"];
+            isOneToOne: false;
+            referencedRelation: "quizzes";
+            referencedColumns: ["quiz_id"];
+          },
+        ];
+      };
+      quiz_results: {
+        Row: {
+          correct_count: number;
+          created_at: string | null;
+          percentage: number;
+          quiz_id: number | null;
+          resources: Json | null;
+          result_id: number;
+          total_count: number;
+          user_id: number | null;
+          youtube_resources: Json | null;
+        };
+        Insert: {
+          correct_count: number;
+          created_at?: string | null;
+          percentage: number;
+          quiz_id?: number | null;
+          resources?: Json | null;
+          result_id?: number;
+          total_count: number;
+          user_id?: number | null;
+          youtube_resources?: Json | null;
+        };
+        Update: {
+          correct_count?: number;
+          created_at?: string | null;
+          percentage?: number;
+          quiz_id?: number | null;
+          resources?: Json | null;
+          result_id?: number;
+          total_count?: number;
+          user_id?: number | null;
+          youtube_resources?: Json | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "quiz_results_quiz_id_fkey";
+            columns: ["quiz_id"];
+            isOneToOne: false;
+            referencedRelation: "quizzes";
+            referencedColumns: ["quiz_id"];
+          },
+          {
+            foreignKeyName: "quiz_results_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          },
+        ];
+      };
+      quizzes: {
+        Row: {
+          created_at: string | null;
+          difficulty: string;
+          experience_level: string | null;
+          learning_goal: string | null;
+          name: string | null;
+          quiz_id: number;
+          topic: string;
+          updated_at: string | null;
+          user_id: number | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          difficulty: string;
+          experience_level?: string | null;
+          learning_goal?: string | null;
+          name?: string | null;
+          quiz_id?: number;
+          topic: string;
+          updated_at?: string | null;
+          user_id?: number | null;
+        };
+        Update: {
+          created_at?: string | null;
+          difficulty?: string;
+          experience_level?: string | null;
+          learning_goal?: string | null;
+          name?: string | null;
+          quiz_id?: number;
+          topic?: string;
+          updated_at?: string | null;
+          user_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "quizzes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          },
+        ];
+      };
       summaries: {
         Row: {
           created_at: string | null;

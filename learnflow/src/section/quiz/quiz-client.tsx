@@ -12,7 +12,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2, XCircle, AlertCircle } from "lucide-react";
+import { AlertCircle, CheckCircle2, XCircle } from "lucide-react";
 import Link from "next/link";
 
 interface Question {
@@ -171,9 +171,9 @@ export default function QuizClient({ questions, summaryId }: QuizClientProps) {
                     />
                     <Label
                       htmlFor={`option-${index}`}
-                      className="flex cursor-pointer items-start"
+                      className="flex cursor-pointer items-center"
                     >
-                      <div className="mr-2 mt-0.5 flex-shrink-0">
+                      <div className="mr-4 mt-0.5 flex-shrink-0">
                         {quizState.isSubmitted &&
                         index === currentQuestion.correctAnswer ? (
                           <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -189,7 +189,7 @@ export default function QuizClient({ questions, summaryId }: QuizClientProps) {
                           </div>
                         )}
                       </div>
-                      <div className="flex-1">{option}</div>
+                      <div className="flex-1 leading-normal">{option}</div>
                     </Label>
                   </div>
                 );

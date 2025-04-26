@@ -1,10 +1,25 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { Database } from "@/utils/supabase/database";
 
-export async function createClient() {
+export async function createClient(admin = true) {
   const cookieStore = cookies();
 
-  return createServerClient(
+  if (admin) {
+    return createServerClient<Database>(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return [];
+          },
+        },
+      }
+    );
+  }
+
+  return createServerClient<Database>(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     {

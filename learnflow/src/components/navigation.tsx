@@ -96,7 +96,7 @@ export default function Navigation({
           <span className="ml-2 text-lg font-bold">LearnFlow</span>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
+        <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-4">
           {menuItems.map((item) => (
             <Button
               key={item.id}

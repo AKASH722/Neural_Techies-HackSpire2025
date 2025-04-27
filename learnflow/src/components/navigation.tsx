@@ -153,7 +153,7 @@ export default function Navigation({
         </div>
 
         {/* Breadcrumb - sticky */}
-        <div className="sticky top-[3.5rem] z-40 h-14 items-center bg-background p-3 md:top-0 md:bg-background md:p-4 md:shadow-sm">
+        <div className="sticky top-[3.5rem] z-40 hidden h-14 items-center bg-background p-3 md:top-0 md:bg-background md:p-4 md:shadow-sm lg:block">
           <Breadcrumb />
         </div>
 

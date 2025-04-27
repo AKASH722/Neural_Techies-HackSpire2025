@@ -34,6 +34,79 @@ export type Database = {
   };
   public: {
     Tables: {
+      learning_preferences: {
+        Row: {
+          id: number;
+          learning_style: string | null;
+          module_preference: string | null;
+          skill_level: string | null;
+          topic: string;
+          user_id: number;
+        };
+        Insert: {
+          id?: number;
+          learning_style?: string | null;
+          module_preference?: string | null;
+          skill_level?: string | null;
+          topic: string;
+          user_id: number;
+        };
+        Update: {
+          id?: number;
+          learning_style?: string | null;
+          module_preference?: string | null;
+          skill_level?: string | null;
+          topic?: string;
+          user_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "learning_preferences_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
+          },
+        ];
+      };
+      module_quizzes: {
+        Row: {
+          created_at: string | null;
+          description: string | null;
+          id: number;
+          module_id: number | null;
+          recommended_video_url: string | null;
+          title: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          description?: string | null;
+          id?: number;
+          module_id?: number | null;
+          recommended_video_url?: string | null;
+          title: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          description?: string | null;
+          id?: number;
+          module_id?: number | null;
+          recommended_video_url?: string | null;
+          title?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "module_quizzes_module_id_fkey";
+            columns: ["module_id"];
+            isOneToOne: false;
+            referencedRelation: "user_course_modules";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       questions: {
         Row: {
           correct_answer: string;
@@ -93,6 +166,59 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "quizzes";
             referencedColumns: ["quiz_id"];
+          },
+        ];
+      };
+      quiz_questions: {
+        Row: {
+          correct_answer: string;
+          created_at: string | null;
+          explanation: string | null;
+          id: number;
+          option_a: string;
+          option_b: string;
+          option_c: string;
+          option_d: string;
+          order_index: number;
+          question: string;
+          quiz_id: number | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          correct_answer: string;
+          created_at?: string | null;
+          explanation?: string | null;
+          id?: number;
+          option_a: string;
+          option_b: string;
+          option_c: string;
+          option_d: string;
+          order_index: number;
+          question: string;
+          quiz_id?: number | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          correct_answer?: string;
+          created_at?: string | null;
+          explanation?: string | null;
+          id?: number;
+          option_a?: string;
+          option_b?: string;
+          option_c?: string;
+          option_d?: string;
+          order_index?: number;
+          question?: string;
+          quiz_id?: number | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "quiz_questions_quiz_id_fkey";
+            columns: ["quiz_id"];
+            isOneToOne: false;
+            referencedRelation: "module_quizzes";
+            referencedColumns: ["id"];
           },
         ];
       };
@@ -279,6 +405,106 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "summaries";
             referencedColumns: ["id"];
+          },
+        ];
+      };
+      user_course_modules: {
+        Row: {
+          content: Json | null;
+          course_id: number | null;
+          created_at: string | null;
+          description: string | null;
+          duration: string | null;
+          id: number;
+          order_index: number;
+          subtitle: string | null;
+          title: string;
+          updated_at: string | null;
+        };
+        Insert: {
+          content?: Json | null;
+          course_id?: number | null;
+          created_at?: string | null;
+          description?: string | null;
+          duration?: string | null;
+          id?: number;
+          order_index: number;
+          subtitle?: string | null;
+          title: string;
+          updated_at?: string | null;
+        };
+        Update: {
+          content?: Json | null;
+          course_id?: number | null;
+          created_at?: string | null;
+          description?: string | null;
+          duration?: string | null;
+          id?: number;
+          order_index?: number;
+          subtitle?: string | null;
+          title?: string;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_course_modules_course_id_fkey";
+            columns: ["course_id"];
+            isOneToOne: false;
+            referencedRelation: "user_courses";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      user_courses: {
+        Row: {
+          category: string | null;
+          created_at: string | null;
+          description: string | null;
+          difficulty: string | null;
+          id: number;
+          image_url: string | null;
+          is_published: boolean | null;
+          preferred_learning_style: string | null;
+          preferred_module_size: string | null;
+          title: string;
+          updated_at: string | null;
+          user_id: number | null;
+        };
+        Insert: {
+          category?: string | null;
+          created_at?: string | null;
+          description?: string | null;
+          difficulty?: string | null;
+          id?: number;
+          image_url?: string | null;
+          is_published?: boolean | null;
+          preferred_learning_style?: string | null;
+          preferred_module_size?: string | null;
+          title: string;
+          updated_at?: string | null;
+          user_id?: number | null;
+        };
+        Update: {
+          category?: string | null;
+          created_at?: string | null;
+          description?: string | null;
+          difficulty?: string | null;
+          id?: number;
+          image_url?: string | null;
+          is_published?: boolean | null;
+          preferred_learning_style?: string | null;
+          preferred_module_size?: string | null;
+          title?: string;
+          updated_at?: string | null;
+          user_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_courses_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["user_id"];
           },
         ];
       };
